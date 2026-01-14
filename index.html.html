@@ -1,76 +1,239 @@
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>I love you, Sheshak</title>
-  <meta name="description" content="A tiny page that says: I love you, Sheshak.">
-  <meta property="og:title" content="I love you, Sheshak">
-  <meta property="og:description" content="A tiny page that says: I love you, Sheshak.">
+  <title>Satoru Gojo Fan Page</title>
+  <meta name="description" content="A tribute website to Satoru Gojo with a playful slider prank.">
+  <meta property="og:title" content="Satoru Gojo Fan Page">
+  <meta property="og:description" content="A tribute website to Satoru Gojo with a playful slider prank.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#0e1a2b">
   <style>
+    :root {
+      color-scheme: light;
+      --ink: #0e1a2b;
+      --glow: #3fb8ff;
+      --mist: #e9f4ff;
+      --snow: #f9fbff;
+    }
+    * {
+      box-sizing: border-box;
+    }
     html, body {
       height: 100%;
       margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
-      background: radial-gradient(1200px 800px at 50% -20%, #ffe6ea, #fff);
+      font-family: "Poppins", "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top, #e9f4ff, #ffffff 55%, #f9fbff 100%);
+      color: var(--ink);
     }
-    .wrap {
-      min-height: 100%;
-      display: grid;
-      place-items: center;
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    .hero {
+      min-height: 100vh;
+      padding: 64px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 24px;
+      gap: 28px;
+    }
+    .badge {
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      color: #3b5f7c;
     }
     h1 {
-      font-size: clamp(2.2rem, 6vw + 1rem, 6rem);
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      margin: 0;
       line-height: 1.05;
-      margin: 0 0 12px;
-      letter-spacing: -0.02em;
     }
-    .heart {
-      display: inline-block;
-      transform: translateY(4px);
-      animation: beat 1.2s infinite ease-in-out;
+    h1 span {
+      display: block;
+      color: var(--glow);
+      text-shadow: 0 0 24px rgba(63, 184, 255, 0.4);
     }
-    @keyframes beat {
-      0%, 100% { transform: scale(1) translateY(4px); }
-      25% { transform: scale(1.08) translateY(4px); }
-      50% { transform: scale(0.98) translateY(4px); }
-      75% { transform: scale(1.06) translateY(4px); }
-    }
-    p {
-      font-size: clamp(1rem, 1.8vw + 0.6rem, 1.6rem);
-      color: #444;
+    .tagline {
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      max-width: 720px;
+      color: #425a74;
       margin: 0;
     }
-    footer {
-      position: fixed;
-      bottom: 10px;
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 18px;
+      max-width: 760px;
       width: 100%;
+    }
+    .stat {
+      background: var(--snow);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(14, 26, 43, 0.08);
+    }
+    .stat h3 {
+      margin: 0 0 8px;
+      font-size: 0.95rem;
+      color: #43617f;
+    }
+    .stat p {
+      margin: 0;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .slider-card {
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      max-width: 560px;
+      width: 100%;
+      box-shadow: 0 16px 40px rgba(14, 26, 43, 0.12);
+    }
+    .slider-card h2 {
+      margin-top: 0;
+    }
+    .slider-wrap {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--glow);
+    }
+    .slider-hint {
+      font-size: 0.95rem;
+      color: #476582;
+    }
+    .prank {
+      position: fixed;
+      inset: 0;
+      background: rgba(14, 26, 43, 0.88);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
       text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .prank.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .prank-card {
+      max-width: 520px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 32px;
+      backdrop-filter: blur(8px);
+    }
+    .prank-card h3 {
+      margin-top: 0;
+      font-size: 2rem;
+    }
+    .prank-card p {
+      margin-bottom: 24px;
+      color: #c7ddf1;
+    }
+    .dismiss {
+      background: var(--glow);
+      border: none;
+      color: #041421;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    footer {
+      margin-top: auto;
+      text-align: center;
+      padding: 24px;
       font-size: 0.9rem;
-      color: #777;
+      color: #5b728e;
     }
-    a {
-      color: inherit;
-      text-decoration: none;
-      border-bottom: 1px dashed #bbb;
-    }
-    a:hover { border-bottom-style: solid; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div>
-      <h1>I love you, <span class="name">Sheshak</span> <span class="heart">❤️</span></h1>
-      <p>Forever and always.</p>
+  <main class="hero">
+    <div class="badge">Limitless Energy</div>
+    <h1>Satoru Gojo <span>the Honored One</span></h1>
+    <p class="tagline">
+      Welcome to a glowing tribute to Jujutsu Kaisen's strongest sorcerer. Infinite confidence,
+      boundless technique, and a smile that never quits.
+    </p>
+    <section class="stats">
+      <div class="stat">
+        <h3>Signature Technique</h3>
+        <p>Limitless + Six Eyes</p>
+      </div>
+      <div class="stat">
+        <h3>Vibe</h3>
+        <p>Unbothered, unstoppable</p>
+      </div>
+      <div class="stat">
+        <h3>Catchphrase</h3>
+        <p>"Nah, I'd win."</p>
+      </div>
+    </section>
+    <section class="slider-card" aria-labelledby="prank-title">
+      <h2 id="prank-title">Slide for a secret Gojo update</h2>
+      <p class="slider-hint">Move the slider all the way to the right.</p>
+      <div class="slider-wrap">
+        <input id="prankSlider" type="range" min="0" max="100" value="0">
+        <span class="slider-hint" id="sliderValue">Current power: 0%</span>
+      </div>
+    </section>
+  </main>
+
+  <div class="prank" id="prankModal" role="dialog" aria-modal="true" aria-labelledby="prank-heading">
+    <div class="prank-card">
+      <h3 id="prank-heading">Ha! Prank alert 😆</h3>
+      <p>Just kidding... the rumor that Gojo died is pure cap. He lives on as the strongest.</p>
+      <button class="dismiss" id="dismissPrank">Back to the fan page</button>
     </div>
   </div>
+
   <footer>
-    Made with ❤️ — <a href="#">for you</a>
+    Built with limitless admiration for Gojo Satoru.
   </footer>
+
+  <script>
+    const prankSlider = document.getElementById("prankSlider");
+    const sliderValue = document.getElementById("sliderValue");
+    const prankModal = document.getElementById("prankModal");
+    const dismissPrank = document.getElementById("dismissPrank");
+
+    const showPrank = () => {
+      prankModal.classList.add("active");
+    };
+
+    const resetSlider = () => {
+      prankSlider.value = 0;
+      sliderValue.textContent = "Current power: 0%";
+    };
+
+    prankSlider.addEventListener("input", (event) => {
+      const value = Number(event.target.value);
+      sliderValue.textContent = `Current power: ${value}%`;
+      if (value >= 100) {
+        showPrank();
+      }
+    });
+
+    dismissPrank.addEventListener("click", () => {
+      prankModal.classList.remove("active");
+      resetSlider();
+    });
+  </script>
 </body>
 </html>
